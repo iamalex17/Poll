@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="poll.css">
+        <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+        <script src="poll.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>ADD POLLS</h1>
+            <div class="add-poll">
+                <strong>Question:</strong> 
+                <input type="text" id="question" value="Enter question here">
+                <label for="single"><br>
+                    <strong>Answers:</strong>
+                    <input type="radio" name="answer" id="single" class="radio-buttons">Yes/No form
+                <br>
+                </label>
+                <label for="multiple">
+                    <input type="radio" name="answer" id="multiple" class="radio-buttons" value="multiple">Multiple choice form
+                </label>
+                <div class="options">
+                    <ol class="poll-list">
+                    </ol>
+                    <a href="#" id="add">+ Add new choice</a>
+                </div>
+                <div class=""></div>
+                <button type="button" id="buttonPoll" class="poll-button">Add Poll</button>
+            </div>
+        </div>
+    </body>
+</html>
