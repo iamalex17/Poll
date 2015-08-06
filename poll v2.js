@@ -98,8 +98,7 @@ $(document).ready(function() {
         $(this).closest('.added-add-poll').find('.edit-button').show();
         $(this).closest('.added-add-poll').find('.cancel').show();
         
-        
-        // !!!!
+    // add new choice when editing a poll
     $('#added-multiple').on('click', function() {
         var choiches = "";
         var newChoice = "";
@@ -119,12 +118,17 @@ $(document).ready(function() {
                 event.preventDefault();
                 var newchoice = "";
                 number++;
-                console.log(number);
                 newchoice += '<li class="choiceList">Choice #' + number;
-                newchoice += '<input type="text" name="choice" class="choiceInputValue"><i class="icon delete fa fa-times-circle"></i>';
+                newchoice += '<input type="text" name="choice" class="choiceInputValue"><i class="icon editableDelete fa fa-times-circle"></i>';
                 newchoice += '</li>';
                 $('.added-poll-list').append(newchoice);
             });
+            
+            // delete new choice
+            $('.added-poll-list').on('click', '.editableDelete', function() {
+            $(this).closest('.choiceList').remove();
+            number -= 1;
+        });
     });
         
         //cancel button
@@ -132,11 +136,59 @@ $(document).ready(function() {
             event.preventDefault();
             $(this).closest('.added-add-poll').find('.input').addClass('transparent-input').prop('disabled', true);
             $(this).closest('.added-add-poll').find('.cancel').hide();
+            $(this).closest('.added-add-poll').find('.choiceList').remove();
+            $(this).closest('.added-add-poll').find('#addChoice').remove();
             $(this).closest('.added-add-poll').find('.edit-button').hide();
             $(this).closest('.added-add-poll').find('.mustHide').show();
         $(this).closest('.added-add-poll').find('.makeVisible').hide();
         });
+        
+        // save edited poll
+        $('#editPoll').on('click', function() {
+            var newValue = $('.input').val();
+            var savedPoll = "";
+                savedPoll += '<div class="added-wrapper">';
+                savedPoll += '<div class="added-spacing"></div>';
+                savedPoll += '<div class="added-add-poll">';
+                savedPoll += '<strong class="question appendHere">Question</strong>';
+                savedPoll += '<input type="text" class="transparent-input input" disabled value="' + newValue + '"' + '>';
+                savedPoll += '<i class="icon added-icon added-delete fa fa-times-circle"></i><i class="fa fa-pencil-square icon added-icon added-edit"></i><br class="editableHere">';
+                savedPoll += '<div class="added-options">';
+                savedPoll += '<strong class="answers">Answers:</strong>';
+                savedPoll += '<ol class="added-poll-list">';
+            if($('#added-single').is(':checked')) { 
+                savedPoll += '<li class="added-list mustHide">Yes/No</li>';
+                savedPoll += '<label for="added-single" class="makeVisible">';
+                savedPoll += '<input type="radio" name="answer" id="added-single" class="radio-buttons">Yes/No form';
+                savedPoll += ' </label>';
+                savedPoll += '<br><label for="added-multiple" class="makeVisible">';
+                savedPoll += '<input type="radio" name="answer" id="added-multiple" class="radio-buttons">Multiple choice form';
+                savedPoll += ' </label>';
+            }
+            else if($('#added-multiple').is(':checked')) {
+                $('.choiceInputValue').each(function() {
+                    var newestValue = $(this).val();
+                    savedPoll += '<li class="added-list mustHide">' + newestValue + '</li>';
+                });
+                savedPoll += '<label for="added-single" class="makeVisible">';
+                savedPoll += '<input type="radio" name="answer" id="added-single" class="radio-buttons">Yes/No form';
+                savedPoll += ' </label>';
+                savedPoll += '<br><label for="added-multiple" class="makeVisible">';
+                savedPoll += '<input type="radio" name="answer" id="added-multiple" class="radio-buttons">Multiple choice form';
+                savedPoll += ' </label>';
+            }
+                savedPoll += '</ol>';
+                savedPoll += '<button type="button" id="editPoll" class="edit-button">Edit Poll</button>';
+                savedPoll += '<a href="#" class="cancel">Cancel</a>';
+                savedPoll += '</div>';
+                savedPoll += '</div>';
+                savedPoll += '<div class="added-spacing"></div>';
+                savedPoll += '</div>';
+            $('.wrapper').append(savedPoll);
+            $('.edit-button').hide();
+            $('.cancel').hide();
+            $('.makeVisible').hide();
+            $(this).closest('.added-wrapper').remove();
+        });
     });
-    
-    
 });
